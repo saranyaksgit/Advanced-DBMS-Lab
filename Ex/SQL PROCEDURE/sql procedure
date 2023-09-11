@@ -1,0 +1,162 @@
+mysql> show databases$
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| adarsh             |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.03 sec)
+
+mysql> use adarsh$
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> create procedure hello()begin select "Hello World"; end;$
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> call hello()$
++-------------+
+| Hello World |
++-------------+
+| Hello World |
++-------------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables$
++------------------+
+| Tables_in_adarsh |
++------------------+
+| BORROW           |
+| BRANCH           |
+| CUSTOMER         |
+| DEPARTMENT       |
+| DEPOSIT          |
+| EMPLOYEE         |
+| JOB              |
+| LOAN             |
+| LOCATION         |
++------------------+
+9 rows in set (0.00 sec)
+
+mysql> select *from EMPLOYEE;
+    -> $
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+| EMPLOYEE_ID | LAST_NAME | FIRST_NAME | MIDDLE_NAME | Job_ID | MANAGER_ID | HIRE_DATE  | SALARY | COMM | Department_ID |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+|        7499 | ALLEN     | KEVIN      | J           |    670 |       7698 | 1985-02-20 |   1600 | 300  |            30 |
+|        7505 | DOYLE     | JEAN       | K           |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
+|        7506 | DENNIS    | LYNN       | S           |    671 |       7839 | 1985-05-15 |   2730 | NULL |            30 |
+|        7507 | BAKER     | LESLIL     | D           |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 |
+|        7521 | WARK      | CYNTHIA    | D           |    670 |       7698 | 1985-02-22 |   1250 | 500  |            30 |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+5 rows in set (0.01 sec)
+
+mysql> create procedure p1()
+    -> begin
+    -> update EMPLOYEE set SALARY = SALARY + (SALARY*0.1);
+    -> end;
+    -> $
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call p1()
+    -> $
+Query OK, 5 rows affected (0.04 sec)
+
+mysql> select *from EMPLOYEE;
+    -> $
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+| EMPLOYEE_ID | LAST_NAME | FIRST_NAME | MIDDLE_NAME | Job_ID | MANAGER_ID | HIRE_DATE  | SALARY | COMM | Department_ID |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+|        7499 | ALLEN     | KEVIN      | J           |    670 |       7698 | 1985-02-20 |   1760 | 300  |            30 |
+|        7505 | DOYLE     | JEAN       | K           |    671 |       7839 | 1985-04-04 |   3135 | NULL |            30 |
+|        7506 | DENNIS    | LYNN       | S           |    671 |       7839 | 1985-05-15 |   3003 | NULL |            30 |
+|        7507 | BAKER     | LESLIL     | D           |    671 |       7839 | 1985-06-10 |   2420 | NULL |            40 |
+|        7521 | WARK      | CYNTHIA    | D           |    670 |       7698 | 1985-02-22 |   1375 | 500  |            30 |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table EMPLOYEE add column STATUS varchar(20)$
+Query OK, 0 rows affected (0.52 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select *from EMPLOYEE;
+    -> $
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+--------+
+| EMPLOYEE_ID | LAST_NAME | FIRST_NAME | MIDDLE_NAME | Job_ID | MANAGER_ID | HIRE_DATE  | SALARY | COMM | Department_ID | STATUS |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+--------+
+|        7499 | ALLEN     | KEVIN      | J           |    670 |       7698 | 1985-02-20 |   1760 | 300  |            30 | NULL   |
+|        7505 | DOYLE     | JEAN       | K           |    671 |       7839 | 1985-04-04 |   3135 | NULL |            30 | NULL   |
+|        7506 | DENNIS    | LYNN       | S           |    671 |       7839 | 1985-05-15 |   3003 | NULL |            30 | NULL   |
+|        7507 | BAKER     | LESLIL     | D           |    671 |       7839 | 1985-06-10 |   2420 | NULL |            40 | NULL   |
+|        7521 | WARK      | CYNTHIA    | D           |    670 |       7698 | 1985-02-22 |   1375 | 500  |            30 | NULL   |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> create procedure status()
+    -> begin
+    -> update EMPLOYEE set STATUS = "Platinum" where SALARY>3000;
+    -> update EMPLOYEE set STATUS = "Gold" where SALARY>2000;
+    -> update EMPLOYEE set STATUS = "Silver" where SALARY>1000;
+    -> end;
+    -> $
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call status()
+    -> $
+Query OK, 5 rows affected (0.09 sec)
+
+mysql> select *from EMPLOYEE;
+    -> $
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+--------+
+| EMPLOYEE_ID | LAST_NAME | FIRST_NAME | MIDDLE_NAME | Job_ID | MANAGER_ID | HIRE_DATE  | SALARY | COMM | Department_ID | STATUS |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+--------+
+|        7499 | ALLEN     | KEVIN      | J           |    670 |       7698 | 1985-02-20 |   1760 | 300  |            30 | Silver |
+|        7505 | DOYLE     | JEAN       | K           |    671 |       7839 | 1985-04-04 |   3135 | NULL |            30 | Silver |
+|        7506 | DENNIS    | LYNN       | S           |    671 |       7839 | 1985-05-15 |   3003 | NULL |            30 | Silver |
+|        7507 | BAKER     | LESLIL     | D           |    671 |       7839 | 1985-06-10 |   2420 | NULL |            40 | Silver |
+|        7521 | WARK      | CYNTHIA    | D           |    670 |       7698 | 1985-02-22 |   1375 | 500  |            30 | Silver |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> create procedure S() begin update EMPLOYEE set STATUS = "Platinum" where SALARY>3000; update EMPLOYEE set STATUS = "Gold" where SALARY<3000; update EMPLOYEE set STATUS = "Silver" where SALARY<2000; end;$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call status()$
+Query OK, 3 rows affected (0.09 sec)
+
+mysql> select *from EMPLOYEE;                                                                                                                                              -> $
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+--------+
+| EMPLOYEE_ID | LAST_NAME | FIRST_NAME | MIDDLE_NAME | Job_ID | MANAGER_ID | HIRE_DATE  | SALARY | COMM | Department_ID | STATUS |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+--------+
+|        7499 | ALLEN     | KEVIN      | J           |    670 |       7698 | 1985-02-20 |   1760 | 300  |            30 | Silver |
+|        7505 | DOYLE     | JEAN       | K           |    671 |       7839 | 1985-04-04 |   3135 | NULL |            30 | Silver |
+|        7506 | DENNIS    | LYNN       | S           |    671 |       7839 | 1985-05-15 |   3003 | NULL |            30 | Silver |
+|        7507 | BAKER     | LESLIL     | D           |    671 |       7839 | 1985-06-10 |   2420 | NULL |            40 | Silver |
+|        7521 | WARK      | CYNTHIA    | D           |    670 |       7698 | 1985-02-22 |   1375 | 500  |            30 | Silver |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> call S() $
+Query OK, 2 rows affected (0.08 sec)
+
+mysql> select *from EMPLOYEE;
+    -> $
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+----------+
+| EMPLOYEE_ID | LAST_NAME | FIRST_NAME | MIDDLE_NAME | Job_ID | MANAGER_ID | HIRE_DATE  | SALARY | COMM | Department_ID | STATUS   |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+----------+
+|        7499 | ALLEN     | KEVIN      | J           |    670 |       7698 | 1985-02-20 |   1760 | 300  |            30 | Silver   |
+|        7505 | DOYLE     | JEAN       | K           |    671 |       7839 | 1985-04-04 |   3135 | NULL |            30 | Platinum |
+|        7506 | DENNIS    | LYNN       | S           |    671 |       7839 | 1985-05-15 |   3003 | NULL |            30 | Platinum |
+|        7507 | BAKER     | LESLIL     | D           |    671 |       7839 | 1985-06-10 |   2420 | NULL |            40 | Gold     |
+|        7521 | WARK      | CYNTHIA    | D           |    670 |       7698 | 1985-02-22 |   1375 | 500  |            30 | Silver   |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+----------+
+5 rows in set (0.00 sec)
+
+
+

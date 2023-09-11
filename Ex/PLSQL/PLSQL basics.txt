@@ -1,0 +1,88 @@
+sqlplus sys as sysdba
+
+SQL*Plus: Release 11.2.0.2.0 Production on Tue Jun 13 13:49:11 2023
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+
+Enter password: oracle
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> SET SERVEROUTPUT ON;
+SQL> BEGIN
+  2  DBMS_OUTPUT.PUT_LINE('Hello World');
+  3  END;
+  4  /
+Hello World
+
+PL/SQL procedure successfully completed.
+
+
+~Sum of two Numbers
+
+SQL> DECLARE
+  2  a INTEGER;
+  3  b INTEGER;
+  4  s INTEGER;
+  5  BEGIN
+  6  a:=&a;
+  7  b:=&b;
+  8  s:=a+b;
+  9  DBMS_OUTPUT.PUT_LINE('Sum is :'||s);
+ 10  END;
+ 11  /
+Enter value for a: 5
+old   6: a:=&a;
+new   6: a:=5;
+Enter value for b: 6
+old   7: b:=&b;
+new   7: b:=6;
+Sum is :11
+
+
+~Factorial of a Number
+
+SQL> DECLARE
+  2  f NUMBER:=1;
+  3  n NUMBER;
+  4  i NUMBER;
+  5  BEGIN
+  6  n:=&n;
+  7  FOR i IN 1..n
+  8  LOOP
+  9  f:=f*i;
+ 10  END LOOP;
+ 11  DBMS_OUTPUT.PUT_LINE('Factorial of '||n||' is '||f);
+ 12  END;
+ 13  /
+Enter value for n: 5
+old   6: n:=&n;
+new   6: n:=5;
+Factorial of 5 is 120
+
+PL/SQL procedure successfully completed.
+
+
+~Reverse of a Number
+
+SQL> DECLARE
+  2  n NUMBER;
+  3  rev_n NUMBER;
+  4  BEGIN
+  5  n:=&n;
+  6  rev_n:=0;
+  7  WHILE n>0 LOOP
+  8  rev_n:=(rev_n*10)+MOD(n,10);     
+  9  n:=FLOOR(n/10);
+ 10  END LOOP;
+ 11  DBMS_OUTPUT.PUT_LINE('Reverse is '||rev_n);
+ 12  END;
+ 13  /
+Enter value for n: 123
+old   5: n:=&n;
+new   5: n:=123;
+Reverse is 321
+
+PL/SQL procedure successfully completed.
+

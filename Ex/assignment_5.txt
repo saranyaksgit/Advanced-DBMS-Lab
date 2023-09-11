@@ -1,0 +1,61 @@
+mysql> create view Location_view as select Regional_group from LOCATION;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select *from Location_view;
++----------------+
+| Regional_group |
++----------------+
+| NEW YORK       |
+| DALLAS         |
+| CHICAGO        |
+| BOSTON         |
++----------------+
+4 rows in set (0.00 sec)
+
+mysql> drop view Location_view;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create view Location_view as select *from LOCATION;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> select *from Location_view;
++-------------+----------------+
+| Location_ID | Regional_Group |
++-------------+----------------+
+|         122 | NEW YORK       |
+|         123 | DALLAS         |
+|         124 | CHICAGO        |
+|         167 | BOSTON         |
++-------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> drop view Location_view;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create index new_index on LOCATION(Location_ID);
+Query OK, 0 rows affected (0.29 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select *from LOCATION;
++-------------+----------------+
+| Location_ID | Regional_Group |
++-------------+----------------+
+|         122 | NEW YORK       |
+|         123 | DALLAS         |
+|         124 | CHICAGO        |
+|         167 | BOSTON         |
++-------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table LOCATION drop index new_index;
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show indexes from LOCATION;
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| Table    | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| LOCATION |          0 | PRIMARY  |            1 | Location_ID | A         |           4 |     NULL | NULL   |      | BTREE      |         |               |
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+1 row in set (0.00 sec)
+

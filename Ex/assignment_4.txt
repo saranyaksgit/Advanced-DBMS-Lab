@@ -1,0 +1,410 @@
+mysql> create table LOCATION(Location_ID int primary key,Regional_Group varchar(20));
+Query OK, 0 rows affected (0.34 sec)
+
+mysql> desc LOCATION;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| Location_ID    | int(11)     | NO   | PRI | NULL    |       |
+| Regional_Group | varchar(20) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+mysql> create table DEPARTMENT(Department_ID int primary key, Name varchar(20), Location_ID int);
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> desc DEPARTMENT;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| Department_ID | int(11)     | NO   | PRI | NULL    |       |
+| Name          | varchar(20) | YES  |     | NULL    |       |
+| Location_ID   | int(11)     | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> create table JOB(Job_ID int primary key, Function varchar(20));
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> desc JOB;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Job_ID   | int(11)     | NO   | PRI | NULL    |       |
+| Function | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table EMPLOYEE(EMPLOYEE_ID int,LAST_NAME varchar(20),FIRST_NAME varchar(20),MIDDLE_NAME varchar(20),Job_ID int,MANAGER_ID int,HIRE_DATE date,SALARY int,COMM varchar(10),Department_ID int);
+Query OK, 0 rows affected (0.26 sec)
+
+mysql> desc EMPLOYEE;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| EMPLOYEE_ID   | int(11)     | YES  |     | NULL    |       |
+| LAST_NAME     | varchar(20) | YES  |     | NULL    |       |
+| FIRST_NAME    | varchar(20) | YES  |     | NULL    |       |
+| MIDDLE_NAME   | varchar(20) | YES  |     | NULL    |       |
+| Job_ID        | int(11)     | YES  |     | NULL    |       |
+| MANAGER_ID    | int(11)     | YES  |     | NULL    |       |
+| HIRE_DATE     | date        | YES  |     | NULL    |       |
+| SALARY        | int(11)     | YES  |     | NULL    |       |
+| COMM          | varchar(10) | YES  |     | NULL    |       |
+| Department_ID | int(11)     | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> insert into LOCATION values(122,'NEW YORK'),(123,'DALLAS'),(124,'CHICAGO'),(167,'BOSTON');
+Query OK, 4 rows affected (0.06 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select *from LOCATION;
++-------------+----------------+
+| Location_ID | Regional_Group |
++-------------+----------------+
+|         122 | NEW YORK       |
+|         123 | DALLAS         |
+|         124 | CHICAGO        |
+|         167 | BOSTON         |
++-------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into DEPARTMENT values(10,'ACCOUNTING',122),(20,'RESEARCH',124),(30,'SALES',123),(40,'OPERATIONS',167);
+Query OK, 4 rows affected (0.14 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select *from DEPARTMENT;
++---------------+------------+-------------+
+| Department_ID | Name       | Location_ID |
++---------------+------------+-------------+
+|            10 | ACCOUNTING |         122 |
+|            20 | RESEARCH   |         124 |
+|            30 | SALES      |         123 |
+|            40 | OPERATIONS |         167 |
++---------------+------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into JOB values(667,'CLERK'),(668,'STAFF'),(669,'ANALYST'),(670,'SALESPERSON'),(671,'MANAGER'),(672,'PRESIDENT');
+Query OK, 6 rows affected (0.02 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select *from JOB;
++--------+-------------+
+| Job_ID | Function    |
++--------+-------------+
+|    667 | CLERK       |
+|    668 | STAFF       |
+|    669 | ANALYST     |
+|    670 | SALESPERSON |
+|    671 | MANAGER     |
+|    672 | PRESIDENT   |
++--------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> insert into EMPLOYEE values(7369,'SMITH','JOHN','Q',667,7902,'1984-12-17',800,'NULL',20);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into EMPLOYEE values(7499,'ALLEN','KEVIN','J',670,7698,'1985-02-20',1600,300,30);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into EMPLOYEE values(7505,'DOYLE','JEAN','K',671,7839,'1985-04-04',2850,'NULL',30);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into EMPLOYEE values(7506,'DENNIS','LYNN','S',671,7839,'1985-05-15',2730,'NULL',30);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into EMPLOYEE values(7507,'BAKER','LESLIL','D',671,7839,'1985-06-10',2200,'NULL',40);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into EMPLOYEE values(7521,'WARK','CYNTHIA','D',670,7698,'1985-02-22',1250,500,30);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select *from EMPLOYEE;
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+| EMPLOYEE_ID | LAST_NAME | FIRST_NAME | MIDDLE_NAME | Job_ID | MANAGER_ID | HIRE_DATE  | SALARY | COMM | Department_ID |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+|        7369 | SMITH     | JOHN       | Q           |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |
+|        7499 | ALLEN     | KEVIN      | J           |    670 |       7698 | 1985-02-20 |   1600 | 300  |            30 |
+|        7505 | DOYLE     | JEAN       | K           |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
+|        7506 | DENNIS    | LYNN       | S           |    671 |       7839 | 1985-05-15 |   2730 | NULL |            30 |
+|        7507 | BAKER     | LESLIL     | D           |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 |
+|        7521 | WARK      | CYNTHIA    | D           |    670 |       7698 | 1985-02-22 |   1250 | 500  |            30 |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> create table LOAN(EMPLOYEE_ID int primary key, Name varchar(20), Amount int);
+Query OK, 0 rows affected (0.33 sec)
+
+mysql> desc LOAN;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| EMPLOYEE_ID | int(11)     | NO   | PRI | NULL    |       |
+| Name        | varchar(20) | YES  |     | NULL    |       |
+| Amount      | int(11)     | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into LOAN values(7505,'JEAN',6000),(7369,'SMITH',3000),(7411,'DAVID',10000),(3333,'JOHNY',6900);
+Query OK, 4 rows affected (0.06 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select *from LOAN;
++-------------+-------+--------+
+| EMPLOYEE_ID | Name  | Amount |
++-------------+-------+--------+
+|        3333 | JOHNY |   6900 |
+|        7369 | SMITH |   3000 |
+|        7411 | DAVID |  10000 |
+|        7505 | JEAN  |   6000 |
++-------------+-------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select *from EMPLOYEE inner join LOAN on EMPLOYEE.EMPLOYEE_ID=LOAN.EMPLOYEE_ID;
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+-------------+-------+--------+
+| EMPLOYEE_ID | LAST_NAME | FIRST_NAME | MIDDLE_NAME | Job_ID | MANAGER_ID | HIRE_DATE  | SALARY | COMM | Department_ID | EMPLOYEE_ID | Name  | Amount |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+-------------+-------+--------+
+|        7369 | SMITH     | JOHN       | Q           |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |        7369 | SMITH |   3000 |
+|        7505 | DOYLE     | JEAN       | K           |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |        7505 | JEAN  |   6000 |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+-------------+-------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select *from EMPLOYEE left join LOAN on EMPLOYEE.EMPLOYEE_ID=LOAN.EMPLOYEE_ID;
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+-------------+-------+--------+
+| EMPLOYEE_ID | LAST_NAME | FIRST_NAME | MIDDLE_NAME | Job_ID | MANAGER_ID | HIRE_DATE  | SALARY | COMM | Department_ID | EMPLOYEE_ID | Name  | Amount |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+-------------+-------+--------+
+|        7369 | SMITH     | JOHN       | Q           |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |        7369 | SMITH |   3000 |
+|        7505 | DOYLE     | JEAN       | K           |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |        7505 | JEAN  |   6000 |
+|        7499 | ALLEN     | KEVIN      | J           |    670 |       7698 | 1985-02-20 |   1600 | 300  |            30 |        NULL | NULL  |   NULL |
+|        7506 | DENNIS    | LYNN       | S           |    671 |       7839 | 1985-05-15 |   2730 | NULL |            30 |        NULL | NULL  |   NULL |
+|        7507 | BAKER     | LESLIL     | D           |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 |        NULL | NULL  |   NULL |
+|        7521 | WARK      | CYNTHIA    | D           |    670 |       7698 | 1985-02-22 |   1250 | 500  |            30 |        NULL | NULL  |   NULL |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+-------------+-------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select *from EMPLOYEE right join LOAN on EMPLOYEE.EMPLOYEE_ID=LOAN.EMPLOYEE_ID;
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+-------------+-------+--------+
+| EMPLOYEE_ID | LAST_NAME | FIRST_NAME | MIDDLE_NAME | Job_ID | MANAGER_ID | HIRE_DATE  | SALARY | COMM | Department_ID | EMPLOYEE_ID | Name  | Amount |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+-------------+-------+--------+
+|        7369 | SMITH     | JOHN       | Q           |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |        7369 | SMITH |   3000 |
+|        7505 | DOYLE     | JEAN       | K           |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |        7505 | JEAN  |   6000 |
+|        NULL | NULL      | NULL       | NULL        |   NULL |       NULL | NULL       |   NULL | NULL |          NULL |        3333 | JOHNY |   6900 |
+|        NULL | NULL      | NULL       | NULL        |   NULL |       NULL | NULL       |   NULL | NULL |          NULL |        7411 | DAVID |  10000 |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+-------------+-------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select EMPLOYEE_ID,FIRST_NAME from EMPLOYEE UNION select EMPLOYEE_ID,Amount from LOAN;
++-------------+------------+
+| EMPLOYEE_ID | FIRST_NAME |
++-------------+------------+
+|        7369 | JOHN       |
+|        7499 | KEVIN      |
+|        7505 | JEAN       |
+|        7506 | LYNN       |
+|        7507 | LESLIL     |
+|        7521 | CYNTHIA    |
+|        3333 | 6900       |
+|        7369 | 3000       |
+|        7411 | 10000      |
+|        7505 | 6000       |
++-------------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select EMPLOYEE_ID,FIRST_NAME from EMPLOYEE UNION select EMPLOYEE_ID,Name from LOAN;
++-------------+------------+
+| EMPLOYEE_ID | FIRST_NAME |
++-------------+------------+
+|        7369 | JOHN       |
+|        7499 | KEVIN      |
+|        7505 | JEAN       |
+|        7506 | LYNN       |
+|        7507 | LESLIL     |
+|        7521 | CYNTHIA    |
+|        3333 | JOHNY      |
+|        7369 | SMITH      |
+|        7411 | DAVID      |
++-------------+------------+
+9 rows in set (0.00 sec)
+
+mysql> select EMPLOYEE.EMPLOYEE_ID from EMPLOYEE where EMPLOYEE.EMPLOYEE_ID in (select LOAN.EMPLOYEE_ID from LOAN);
++-------------+
+| EMPLOYEE_ID |
++-------------+
+|        7369 |
+|        7505 |
++-------------+
+2 rows in set (0.00 sec)
+
+mysql> select EMPLOYEE_ID from EMPLOYEE union all select EMPLOYEE_ID from LOAN;
++-------------+
+| EMPLOYEE_ID |
++-------------+
+|        7369 |
+|        7499 |
+|        7505 |
+|        7506 |
+|        7507 |
+|        7521 |
+|        3333 |
+|        7369 |
+|        7411 |
+|        7505 |
++-------------+
+10 rows in set (0.00 sec)
+
+mysql> select *from JOB;
++--------+-------------+
+| Job_ID | Function    |
++--------+-------------+
+|    667 | CLERK       |
+|    668 | STAFF       |
+|    669 | ANALYST     |
+|    670 | SALESPERSON |
+|    671 | MANAGER     |
+|    672 | PRESIDENT   |
++--------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> select *from EMPLOYEE;
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+| EMPLOYEE_ID | LAST_NAME | FIRST_NAME | MIDDLE_NAME | Job_ID | MANAGER_ID | HIRE_DATE  | SALARY | COMM | Department_ID |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+|        7369 | SMITH     | JOHN       | Q           |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |
+|        7499 | ALLEN     | KEVIN      | J           |    670 |       7698 | 1985-02-20 |   1600 | 300  |            30 |
+|        7505 | DOYLE     | JEAN       | K           |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
+|        7506 | DENNIS    | LYNN       | S           |    671 |       7839 | 1985-05-15 |   2730 | NULL |            30 |
+|        7507 | BAKER     | LESLIL     | D           |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 |
+|        7521 | WARK      | CYNTHIA    | D           |    670 |       7698 | 1985-02-22 |   1250 | 500  |            30 |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> select count(EMPLOYEE_ID)from EMPLOYEE where JOB_ID=670;
++--------------------+
+| count(EMPLOYEE_ID) |
++--------------------+
+|                  2 |
++--------------------+
+1 row in set (0.01 sec)
+
+mysql> select *from DEPARTMENT;
++---------------+------------+-------------+
+| Department_ID | Name       | Location_ID |
++---------------+------------+-------------+
+|            10 | ACCOUNTING |         122 |
+|            20 | RESEARCH   |         124 |
+|            30 | SALES      |         123 |
+|            40 | OPERATIONS |         167 |
++---------------+------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select FIRST_NAME from EMPLOYEE where DEPARTMENT_ID not in(10,30);
++------------+
+| FIRST_NAME |
++------------+
+| JOHN       |
+| LESLIL     |
++------------+
+2 rows in set (0.00 sec)
+
+mysql> mysql> select EMPLOYEE_ID,LAST_NAME from EMPLOYEE order by SALARY desc;
+ERROR 1054 (42S22): Unknown column 'EMPLOYEEMPLOYEE_ID' in 'field list'
+mysql> select EMPLOYEE_ID,LAST_NAME from EMPLOYEE order by SALARY desc;
++-------------+-----------+
+| EMPLOYEE_ID | LAST_NAME |
++-------------+-----------+
+|        7505 | DOYLE     |
+|        7506 | DENNIS    |
+|        7507 | BAKER     |
+|        7499 | ALLEN     |
+|        7521 | WARK      |
+|        7369 | SMITH     |
++-------------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> select DEPARTMENT_ID,count(*) as EMPLOYEE_COUNT from EMPLOYEE group by DEPARTMENT_ID;
++---------------+----------------+
+| DEPARTMENT_ID | EMPLOYEE_COUNT |
++---------------+----------------+
+|            20 |              1 |
+|            30 |              4 |
+|            40 |              1 |
++---------------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> select DEPARTMENT_ID from EMPLOYEE group by DEPARTMENT_ID having count(*) >=4;
++---------------+
+| DEPARTMENT_ID |
++---------------+
+|            30 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select *from EMPLOYEE where SALARY=(select max(SALARY)from EMPLOYEE);
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+| EMPLOYEE_ID | LAST_NAME | FIRST_NAME | MIDDLE_NAME | Job_ID | MANAGER_ID | HIRE_DATE  | SALARY | COMM | Department_ID |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+|        7505 | DOYLE     | JEAN       | K           |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+1 row in set (0.00 sec)
+
+mysql> update EMPLOYEE set SALARY=SALARY * 1.1 where JOB_ID=(select JOB_ID from JOB where function='CLEARK');
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> DELETE FROM EMPLOYEE WHERE Department_ID=20;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select *from EMPLOYEE;
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+| EMPLOYEE_ID | LAST_NAME | FIRST_NAME | MIDDLE_NAME | Job_ID | MANAGER_ID | HIRE_DATE  | SALARY | COMM | Department_ID |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+|        7499 | ALLEN     | KEVIN      | J           |    670 |       7698 | 1985-02-20 |   1600 | 300  |            30 |
+|        7505 | DOYLE     | JEAN       | K           |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
+|        7506 | DENNIS    | LYNN       | S           |    671 |       7839 | 1985-05-15 |   2730 | NULL |            30 |
+|        7507 | BAKER     | LESLIL     | D           |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 |
+|        7521 | WARK      | CYNTHIA    | D           |    670 |       7698 | 1985-02-22 |   1250 | 500  |            30 |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> select d.Department_ID, d.Name from DEPARTMENT d left join EMPLOYEE e on d.Department_ID = e.Department_ID where e.Department_ID is NULL;
++---------------+------------+
+| Department_ID | Name       |
++---------------+------------+
+|            10 | ACCOUNTING |
+|            20 | RESEARCH   |
++---------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> mysql> select Department_ID, max(salary) as max_salary, min(salary) as min_salary, avg(salary) as avg_salary from EMPLOYEE group by Department_ID;
++---------------+------------+------------+------------+
+| Department_ID | max_salary | min_salary | avg_salary |
++---------------+------------+------------+------------+
+|            30 |       2850 |       1250 |  2107.5000 |
+|            40 |       2200 |       2200 |  2200.0000 |
++---------------+------------+------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select count(*) as EMPLOYEECount from EMPLOYEE where year(HIRE_DATE)=1985;
++---------------+
+| EMPLOYEECount |
++---------------+
+|             5 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select from EMPLOYEE where LOCATION = 'NEW YORK';
+
+mysql> select e.*, d.Name from EMPLOYEE e join DEPARTMENT d on e.Department_ID = d.Department_ID;
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+------------+
+| EMPLOYEE_ID | LAST_NAME | FIRST_NAME | MIDDLE_NAME | Job_ID | MANAGER_ID | HIRE_DATE  | SALARY | COMM | Department_ID | Name       |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+------------+
+|        7499 | ALLEN     | KEVIN      | J           |    670 |       7698 | 1985-02-20 |   1600 | 300  |            30 | SALES      |
+|        7505 | DOYLE     | JEAN       | K           |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 | SALES      |
+|        7506 | DENNIS    | LYNN       | S           |    671 |       7839 | 1985-05-15 |   2730 | NULL |            30 | SALES      |
+|        7507 | BAKER     | LESLIL     | D           |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 | OPERATIONS |
+|        7521 | WARK      | CYNTHIA    | D           |    670 |       7698 | 1985-02-22 |   1250 | 500  |            30 | SALES      |
++-------------+-----------+------------+-------------+--------+------------+------------+--------+------+---------------+------------+
+5 rows in set (0.00 sec)
+

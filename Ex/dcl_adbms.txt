@@ -1,0 +1,22 @@
+ |~~~~|
+ |DCL |
+ |~~~~|
+
+set global validate_password_policy=low;
+create user user1 identified by 'abc123';
+grant all on customer to user1;
+exit
+mysql -u user1 -p;
+show databases;
+use adarsh;
+show tables;
+exit
+mysql -u root -p;
+use adarsh;
+show tables;
+revoke all on CUSTOMER from user1;
+exit
+mysql -u user1 -p;
+show databases;
+use adarsh;
+show tables;

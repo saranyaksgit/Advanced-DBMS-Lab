@@ -1,0 +1,226 @@
+mysql> update DEPOSIT set amount=amount+(amount*10/100);
+Query OK, 10 rows affected (0.05 sec)
+Rows matched: 10  Changed: 10  Warnings: 0
+
+mysql> select *from DEPOSIT;
++--------+---------+--------+-----------+------------+
+| Acc_no | Cust_id | Amount | Branch_id | Open_date  |
++--------+---------+--------+-----------+------------+
+| 1      | 1       |   1100 | 1         | 2002-01-21 |
+| 10     | 10      |  11000 | 10        | 2011-10-30 |
+| 2      | 2       |   2200 | 2         | 2003-02-22 |
+| 3      | 3       |   3300 | 3         | 2004-03-23 |
+| 4      | 4       |   4400 | 4         | 2005-04-24 |
+| 5      | 5       |   5500 | 5         | 2006-05-25 |
+| 6      | 6       |   6600 | 6         | 2007-06-26 |
+| 7      | 7       |   7700 | 7         | 2008-07-27 |
+| 8      | 8       |   8800 | 8         | 2009-08-28 |
+| 9      | 9       |   9900 | 9         | 2010-09-29 |
++--------+---------+--------+-----------+------------+
+10 rows in set (0.00 sec)
+
+
+mysql> insert into BORROW values(1,1,1,100),(2,2,2,200),(3,3,3,300),(4,6,4,1000),(5,10,5,5000);;
+Query OK, 5 rows affected (0.03 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select *from BORROW;
++---------+---------+-----------+--------+
+| Loan_no | Cust_id | Branch_id | Amount |
++---------+---------+-----------+--------+
+| 1       | 1       | 1         |    100 |
+| 2       | 2       | 2         |    200 |
+| 3       | 3       | 3         |    300 |
+| 4       | 6       | 4         |   1000 |
+| 5       | 10      | 5         |   5000 |
++---------+---------+-----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select count(loan_no) from BORROW;
++----------------+
+| count(loan_no) |
++----------------+
+|              5 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(amount) from DEPOSIT;
++-------------+
+| sum(amount) |
++-------------+
+|       59895 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(city) from CUSTOMER;
++-------------+
+| count(city) |
++-------------+
+|          10 |
++-------------+
+1 row in set (0.00 sec)
+
+
+mysql> select Branch_id,sum(amount) from DEPOSIT group by Branch_id;
++-----------+-------------+
+| Branch_id | sum(amount) |
++-----------+-------------+
+| 1         |        1089 |
+| 10        |       10890 |
+| 2         |        2178 |
+| 3         |        3267 |
+| 4         |        4356 |
+| 5         |        5445 |
+| 6         |        6534 |
+| 7         |        7623 |
+| 8         |        8712 |
+| 9         |        9801 |
++-----------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> select Branch_id,sum(amount) from DEPOSIT where amount>4000 group by Branch_id;
++-----------+-------------+
+| Branch_id | sum(amount) |
++-----------+-------------+
+| 10        |       10890 |
+| 4         |        4356 |
+| 5         |        5445 |
+| 6         |        6534 |
+| 7         |        7623 |
+| 8         |        8712 |
+| 9         |        9801 |
++-----------+-------------+
+7 rows in set (0.02 sec)
+
+mysql> select sum(amount) from DEPOSIT where Branch_id in (select Branch_id from BRANCH where city="Kozhikode");
++-------------+
+| sum(amount) |
++-------------+
+|       15246 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select Cust_id,C_name from CUSTOMER order by C_name;
++---------+----------+
+| Cust_id | C_name   |
++---------+----------+
+| 2       | Abhishek |
+| 1       | Adarsh   |
+| 3       | Akshay   |
+| 7       | Arjun    |
+| 6       | Fazil    |
+| 8       | Joji     |
+| 9       | Ragesh   |
+| 10      | Reno     |
+| 5       | Sanjay   |
+| 4       | Sooraj   |
++---------+----------+
+10 rows in set (0.00 sec)
+
+mysql> select Branch_id from DEPOSIT group by Branch_id having sum(amount)>5000;
++-----------+
+| Branch_id |
++-----------+
+| 10        |
+| 5         |
+| 6         |
+| 7         |
+| 8         |
+| 9         |
++-----------+
+6 rows in set (0.00 sec)
+
+
+mysql> select C_name from CUSTOMER where Cust_id in (select Cust_id from DEPOSIT where amount=(select min(amount)from DEPOSIT));
++--------+
+| C_name |
++--------+
+| Adarsh |
++--------+
+1 row in set (0.02 sec)
+
+mysql> select C_name from CUSTOMER where Cust_id in (select Cust_id from DEPOSIT where amount=(select max(amount)from DEPOSIT));
++--------+
+| C_name |
++--------+
+| Reno   |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select count(city) from CUSTOMER where Cust_id in (select Cust_id from DEPOSIT group by Cust_id having city="Kozhikode");
++-------------+
+| count(city) |
++-------------+
+|           3 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(city) from CUSTOMER where Cust_id in (select Cust_id from DEPOSIT group by Cust_id having city="Truvandrum");
++-------------+
+| count(city) |
++-------------+
+|           2 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select max(amount) from DEPOSIT where Branch_id in (select Branch_id from BRANCH where city="Kozhikode");
++-------------+
+| max(amount) |
++-------------+
+|        7623 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(city) from CUSTOMER where city="Malappuram";
++-------------+
+| count(city) |
++-------------+
+|           1 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select C_name from CUSTOMER where city not in("Malappuram","Kozhikode");
++----------+
+| C_name   |
++----------+
+| Reno     |
+| Abhishek |
+| Akshay   |
+| Sooraj   |
+| Joji     |
+| Ragesh   |
++----------+
+6 rows in set (0.00 sec)
+
+mysql> select C_name from CUSTOMER where city not in("Malappuram","Kozhikode","Truvandrum");
++--------+
+| C_name |
++--------+
+| Reno   |
+| Akshay |
+| Joji   |
+| Ragesh |
++--------+
+4 rows in set (0.00 sec)
+
+mysql> select Cust_id,C_name from CUSTOMER order by C_name desc;
++---------+----------+
+| Cust_id | C_name   |
++---------+----------+
+| 4       | Sooraj   |
+| 5       | Sanjay   |
+| 10      | Reno     |
+| 9       | Ragesh   |
+| 8       | Joji     |
+| 6       | Fazil    |
+| 7       | Arjun    |
+| 3       | Akshay   |
+| 1       | Adarsh   |
+| 2       | Abhishek |
++---------+----------+
+10 rows in set (0.00 sec)
+
+
+
+
+

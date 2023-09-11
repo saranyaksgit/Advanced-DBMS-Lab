@@ -1,0 +1,148 @@
+ |~~~~|
+ |DEMO|
+ |~~~~|    
+mysql> create database adarsh;
+Query OK, 1 row affected (0.16 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| adarsh             |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use adarsh
+Database changed
+mysql> create table student(Roll_no int,name varchar(10));
+Query OK, 0 rows affected (0.41 sec)
+
+mysql> show tables;
++------------------+
+| Tables_in_adarsh |
++------------------+
+| student          |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Roll_no | int(11)     | YES  |     | NULL    |       |
+| name    | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.02 sec)
+
+mysql> insert into student values(1,'reno');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into student values(2,'abhishek');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into student values(3,'akshay');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Roll_no | int(11)     | YES  |     | NULL    |       |
+| name    | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select *from student;
++---------+----------+
+| Roll_no | name     |
++---------+----------+
+|       1 | reno     |
+|       2 | abhishek |
+|       3 | akshay   |
++---------+----------+
+3 rows in set (0.00 sec)
+
+mysql> alter table student add primary key(Roll_no);
+Query OK, 0 rows affected (0.66 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Roll_no | int(11)     | NO   | PRI | NULL    |       |
+| name    | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> delete from student where Roll_no=2;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select *from student;
++---------+--------+
+| Roll_no | name   |
++---------+--------+
+|       1 | reno   |
+|       3 | akshay |
++---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> alter table student add column Address varchar(20);
+Query OK, 0 rows affected (0.64 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Roll_no | int(11)     | NO   | PRI | NULL    |       |
+| name    | varchar(10) | YES  |     | NULL    |       |
+| Address | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> update student set Address='athira bhavan';
+Query OK, 2 rows affected (0.05 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select *from student;
++---------+--------+---------------+
+| Roll_no | name   | Address       |
++---------+--------+---------------+
+|       1 | reno   | athira bhavan |
+|       3 | akshay | athira bhavan |
++---------+--------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> update student set Address='adarsh bhavan' where Roll_no=1;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from student;
++---------+--------+---------------+
+| Roll_no | name   | Address       |
++---------+--------+---------------+
+|       1 | reno   | adarsh bhavan |
+|       3 | akshay | athira bhavan |
++---------+--------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> truncate table student;
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> select *from student;
+Empty set (0.00 sec)
+
+mysql> drop table student;
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> desc student;
+ERROR 1146 (42S02): Table 'adarsh.student' doesn't exist
+mysql> exit
+Bye
+
+

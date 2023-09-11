@@ -1,0 +1,147 @@
+ |~~~~~~~~~~|
+ |ASSIGNMENT|
+ |~~~~~~~~~~|
+
+mysql> create table CUSTOMER(Cust_id varchar(10) primary key,C_name varchar(15),City varchar(10));
+Query OK, 0 rows affected (0.32 sec)
+
+mysql> desc CUSTOMER;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Cust_id | varchar(10) | NO   | PRI | NULL    |       |
+| C_name  | varchar(15) | YES  |     | NULL    |       |
+| City    | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> create table BRANCH(Branch_id varchar(5) primary key,Bname varchar (15),City varchar(10));
+Query OK, 0 rows affected (0.30 sec)
+
+mysql> desc BRANCH;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Branch_id | varchar(5)  | NO   | PRI | NULL    |       |
+| Bname     | varchar(15) | YES  |     | NULL    |       |
+| City      | varchar(10) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table DEPOSIT(Acc_no varchar(10) primary key,Cust_id varchar(10) not null,Amount int,Branch_id Varchar(5),Open_date date);
+Query OK, 0 rows affected (0.29 sec)
+
+mysql> desc DEPOSIT;create table CUSTOMER(Cust_id varchar(10) primary key,C_name varchar(15),City varchar(10));
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Acc_no    | varchar(10) | NO   | PRI | NULL    |       |
+| Cust_id   | varchar(10) | NO   |     | NULL    |       |
+| Amount    | int(11)     | YES  |     | NULL    |       |
+| Branch_id | varchar(5)  | YES  |     | NULL    |       |
+| Open_date | date        | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table BORROW(Loan_no varchar(5) primary key,Cust_id varchar(10),Branch_id varchar(5),Amount int);
+Query OK, 0 rows affected (0.26 sec)
+create table CUSTOMER(Cust_id varchar(10) primary key,C_name varchar(15),City varchar(10));
+mysql> desc BORROW;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Loan_no   | varchar(5)  | NO   | PRI | NULL    |       |
+| Cust_id   | varchar(10) | YES  |     | NULL    |       |
+| Branch_id | varchar(5)  | YES  |     | NULL    |       |
+| Amount    | int(11)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table DEPOSIT add foreign key(Cust_id) references CUSTOMER(Cust_id);
+Query OK, 0 rows affected (0.83 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc DEPOSIT;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Acc_no    | varchar(10) | NO   | PRI | NULL    |       |
+| Cust_id   | varchar(10) | NO   | MUL | NULL    |       |
+| Amount    | int(11)     | YES  |     | NULL    |       |
+| Branch_id | varchar(5)  | YES  |     | NULL    |       |
+| Open_date | date        | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table CUSTOMER add address char(20);
+Query OK, 0 rows affected (0.47 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc CUSTOMER;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Cust_id | varchar(10) | NO   | PRI | NULL    |       |
+| C_name  | varchar(15) | YES  |     | NULL    |       |
+| City    | varchar(10) | YES  |     | NULL    |       |
+| address | char(20)    | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table `CUSTOMER` change column `address` `New_address` varchar(20) not null;
+Query OK, 0 rows affected (0.66 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc CUSTOMER;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Cust_id      | varchar(10) | NO   | PRI | NULL    |       |
+| C_name       | varchar(15) | YES  |     | NULL    |       |
+| City         | varchar(10) | YES  |     | NULL    |       |
+| New_address  | varchar(20) | NO   |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table CUSTOMER drop column New_address;
+Query OK, 0 rows affected (0.48 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc CUSTOMER;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Cust_id | varchar(10) | NO   | PRI | NULL    |       |
+| C_name  | varchar(15) | YES  |     | NULL    |       |
+| City    | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table CUSTOMER rename to CUSTOMER_COPY;
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> show tables;
++------------------+
+| Tables_in_adarsh |
++------------------+
+| BORROW           |
+| BRANCH           |
+| CUSTOMER_COPY    |
+| DEPOSIT          |
++------------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table CUSTOMER_COPY rename to CUSTOMER;
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> show tables;
++------------------+
+| Tables_in_adarsh |
++------------------+
+| BORROW           |
+| BRANCH           |
+| CUSTOMER         |
+| DEPOSIT          |
++------------------+
+4 rows in set (0.00 sec)
+

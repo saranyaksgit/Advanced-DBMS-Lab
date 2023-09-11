@@ -1,0 +1,153 @@
+mongo
+MongoDB shell version v3.6.3
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.6.3
+Server has startup warnings: 
+2023-07-22T13:21:33.157+0530 I STORAGE  [initandlisten] 
+2023-07-22T13:21:33.157+0530 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2023-07-22T13:21:33.157+0530 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2023-07-22T13:21:36.435+0530 I CONTROL  [initandlisten] 
+2023-07-22T13:21:36.436+0530 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2023-07-22T13:21:36.436+0530 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2023-07-22T13:21:36.436+0530 I CONTROL  [initandlisten] 
+> use adarsh;
+switched to db adarsh
+> db;
+adarsh
+> db.dropDatabase();
+{ "ok" : 1 }
+> db.createCollection("Student");
+{ "ok" : 1 }
+> db;
+adarsh
+> db.createCollection("Employee");
+{ "ok" : 1 }
+> show collections;
+Employee
+Student
+> db.Student.drop();
+true
+> show collections;
+Employee
+
+> db.Student.insert({"Roll_no":1,"Name":"Adarsh"});
+WriteResult({ "nInserted" : 1 })
+
+> db.Student.insert({"Age":22,"City":"Kozhikkode","State":"Kerala"});
+WriteResult({ "nInserted" : 1 })
+
+> db.Student.find();
+{ "_id" : ObjectId("64bb9259f8a5867fa239055e"), "Roll_no" : 1, "Name" : "Adarsh" }
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+> db.Student.insert({"_id":1,"City":"Eranakulam","State":"Kerala"});
+WriteResult({ "nInserted" : 1 })
+> db.Student.find();
+{ "_id" : ObjectId("64bb9259f8a5867fa239055e"), "Roll_no" : 1, "Name" : "Adarsh" }
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+{ "_id" : 1, "City" : "Eranakulam", "State" : "Kerala" }
+
+> db.Student.find().pretty();
+{
+	"_id" : ObjectId("64bb9259f8a5867fa239055e"),
+	"Roll_no" : 1,
+	"Name" : "Adarsh"
+}
+{
+	"_id" : ObjectId("64bb92f3f8a5867fa239055f"),
+	"Age" : 22,
+	"City" : "Kozhikkode",
+	"State" : "Kerala"
+}
+{ "_id" : 1, "City" : "Eranakulam", "State" : "Kerala" }
+
+> db.Student.findOne();
+{
+	"_id" : ObjectId("64bb9259f8a5867fa239055e"),
+	"Roll_no" : 1,
+	"Name" : "Adarsh"
+}
+
+> db.Student.find().limit(2);
+{ "_id" : ObjectId("64bb9259f8a5867fa239055e"), "Roll_no" : 1, "Name" : "Adarsh" }
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+
+> db.Student.find().limit(2).skip(2);
+{ "_id" : 1, "City" : "Eranakulam", "State" : "Kerala" }
+
+> db.Student.save({"_id"> db.Student.find({"Age":{$lt:25}});
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+> db.Student.find({"Age":{$gt:20}});
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+:3,"City":"Alappuzha","State":"Kerala"});
+WriteResult({ "nMatched" : 0, "nUpserted" : 1, "nModified" : 0, "_id" : 3 })
+> db.Student.find();
+{ "_id" : ObjectId("64bb9259f8a5867fa239055e"), "Roll_no" : 1, "Name" : "Adarsh" }
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+{ "_id" : 1, "City" : "Eranakulam", "State" : "Kerala" }
+{ "_id" : 3, "City" : "Alappuzha", "State" : "Kerala" }
+
+> db.Student.save({"_id":13,"Address":"Mecharil H","City":"Thalayolaparambu","District":"Kottayam","State":"Kerala"});
+WriteResult({ "nMatched" : 0, "nUpserted" : 1, "nModified" : 0, "_id" : 13 })
+> db.Student.find();
+{ "_id" : ObjectId("64bb9259f8a5867fa239055e"), "Roll_no" : 1, "Name" : "Adarsh" }
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+{ "_id" : 1, "City" : "Eranakulam", "State" : "Kerala" }
+{ "_id" : 3, "City" : "Alappuzha", "State" : "Kerala" }
+{ "_id" : 13, "Address" : "Mecharil H", "City" : "Thalayolaparambu", "District" : "Kottayam", "State" : "Kerala" }
+> db.Student.remove({"Ro> db.Student.find({"Age":{$lt:25}});
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+> db.Student.find({"Age":{$gt:20}});
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+ll_no":1});
+WriteResult({ "nRemoved" : 1 })
+> db.Student.find();
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+{ "_id" : 1, "City" : "Eranakulam", "State" : "Kerala" }
+{ "_id" : 3, "City" : "Alappuzha", "State" : "Kerala" }
+{ "_id" : 13, "Address" : "Mecharil H", "City" : "Thalayolaparambu", "District" : "Kottayam", "State" : "Kerala" }
+
+> db.Student.update({"City":"Eranakulam"},{$set:{"City":"Kochi"}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Student.find();
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+{ "_id" : 1, "City" : "Kochi", "State" : "Kerala" }
+{ "_id" : 3, "City" : "Alappuzha", "State" : "Kerala" }
+{ "_id" : 13, "Address" : "Mecharil H", "City" : "Thalayolaparambu", "District" : "Kottayam", "State" : "Kerala" }
+
+> db.Student.update({"City":"Kochi"},{$set:{"City":"Coimbatore","State":"Tamil Nadu"}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Student.find();
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+{ "_id" : 1, "City" : "Coimbatore", "State" : "Tamil Nadu" }
+{ "_id" : 3, "City" : "Alappuzha", "State" : "Kerala" }
+{ "_id" : 13, "Address" : "Mecharil H", "City" : "Thalayolaparambu", "District" : "Kottayam", "State" : "Kerala" }
+> db.Student.find().sort({"City":1});
+{ "_id" : 3, "City" : "Alappuzha", "State" : "Kerala" }
+{ "_id" : 1, "City" : "Coimbatore", "State" : "Tamil Nadu" }
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+{ "_id" : 13, "Address" : "Mecharil H", "City" : "Thalayolaparambu", "District" : "Kottayam", "State" : "Kerala" }
+> db.Student.find().sort({"City":-1});
+{ "_id" : 13, "Address" : "Mecharil H", "City" : "Thalayolaparambu", "District" : "Kottayam", "State" : "Kerala" }
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+{ "_id" : 1, "City" : "Coimbatore", "State" : "Tamil Nadu" }
+{ "_id" : 3, "City" : "Alappuzha", "State" : "Kerala" }
+
+> db.Student.find({"City":{$ne:"Thalayolaparambu"}});
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+{ "_id" : 1, "City" : "Coimbatore", "State" : "Tamil Nadu" }
+{ "_id" : 3, "City" : "Alappuzha", "State" : "Kerala" }
+
+> db.Student.find({"Age":{$lt:25}});
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+> db.Student.find({"Age":{$gt:20}});
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+
+> db.Student.find({$and:[{"City":"Coimbatore"},{"State":"Tamil Nadu"}]});
+{ "_id" : 1, "City" : "Coimbatore", "State" : "Tamil Nadu" }
+> db.Student.find({$or:[{"City":"Coimbatore"},{"State":"Kerala"}]});
+{ "_id" : ObjectId("64bb92f3f8a5867fa239055f"), "Age" : 22, "City" : "Kozhikkode", "State" : "Kerala" }
+{ "_id" : 1, "City" : "Coimbatore", "State" : "Tamil Nadu" }
+{ "_id" : 3, "City" : "Alappuzha", "State" : "Kerala" }
+{ "_id" : 13, "Address" : "Mecharil H", "City" : "Thalayolaparambu", "District" : "Kottayam", "State" : "Kerala" }
+
+
