@@ -1,0 +1,90 @@
+1. a) Design and Develop SQL DDL statements which demonstrate the use of SQL commands such as Create, Insert, Select, Alter, View, Index, Truncate and Drop. 
+      Inser tminimum 8 rows in the table).
+   • Cust_novarchar(10) Primary Key,FnameVarchar(20) Not NULL,
+     MnameVarchar(20),LnameVarchar(20) Not NULL,Address Varchar(30),
+     City Varchar(15),State Varchar(20),Mobile_no Number(15) Not NULL,
+     Occupation Varchar(20),Company_NameVarchar(25).
+     
+-- 1. Create the Customer table
+CREATE TABLE Customer (
+    Cust_no varchar(10) PRIMARY KEY,
+    Fname varchar(20) NOT NULL,
+    Mname varchar(20),
+    Lname varchar(20) NOT NULL,
+    Address varchar(30),
+    City varchar(15),
+    State varchar(20),
+    Mobile_no numeric(15) NOT NULL,
+    Occupation varchar(20),
+    Company_Name varchar(25)
+);
+
+-- 2. Insert 8 rows into the Customer table
+INSERT INTO Customer (Cust_no, Fname, Mname, Lname, Address, City, State, Mobile_no, Occupation, Company_Name)
+VALUES
+    ('C001', 'John', 'A', 'Doe', '123 Main St', 'New York', 'NY', 1234567890, 'Engineer', 'ABC Corp'),
+    ('C002', 'Jane', 'B', 'Smith', '456 Elm St', 'Los Angeles', 'CA', 9876543210, 'Doctor', 'XYZ Hospital'),
+    ('C003', 'Michael', 'C', 'Johnson', '789 Oak St', 'Chicago', 'IL', 5555555555, 'Teacher', 'PQR School'),
+    ('C004', 'Emily', 'D', 'Brown', '101 Pine St', 'San Francisco', 'CA', 7777777777, 'Designer', 'LMN Designs'),
+    ('C005', 'Robert', 'E', 'Wilson', '222 Cedar St', 'Houston', 'TX', 9999999999, 'Lawyer', 'JKL Law Firm'),
+    ('C006', 'Sarah', 'F', 'Clark', '333 Birch St', 'Boston', 'MA', 8888888888, 'Writer', 'EFG Publishing'),
+    ('C007', 'William', 'G', 'Anderson', '444 Maple St', 'Miami', 'FL', 6666666666, 'Chef', 'HIJ Restaurant'),
+    ('C008', 'Olivia', 'H', 'Martinez', '555 Walnut St', 'Seattle', 'WA', 3333333333, 'Doctor', 'QRS Medical');
+
+-- 3. Select all rows from the Customer table
+SELECT * FROM Customer;=
+
+-- 4. Alter the table to add an Email column
+ALTER TABLE Customer ADD Email varchar(50);
+~ desc Customer;
+
+-- 5. Create a view to display customers in California
+CREATE VIEW California_Customers AS
+SELECT * FROM Customer WHERE State = 'CA';
+~SELECT * FROM California_Customers;
+
+-- 6. Create an index on the Mobile_no column
+CREATE INDEX idx_Mobile_no ON Customer(Mobile_no);
+~show indexes from Customer;
+
+-- 7. Truncate the Customer table (removes all rows)
+TRUNCATE TABLE Customer;
+
+-- 8. Drop the Customer table
+DROP TABLE Customer;
+
+-- 9. Drop the California_Customers view
+DROP VIEW California_Customers;
+
+
+
+
+b) Write a PL/SQL program to check whether the given number is palindrome or not.
+
+SQL> DECLARE
+2 n NUMBER;
+3 rev_n NUMBER := 0;
+4 temp_n NUMBER;
+5 BEGIN
+6 n := &n;
+7 temp_n := n;
+8 WHILE temp_n > 0 LOOP
+9 rev_n := (rev_n * 10) + MOD(temp_n, 10);
+10 temp_n := FLOOR(temp_n / 10);
+11 END LOOP;
+12 IF n = rev_n THEN
+13 DBMS_OUTPUT.PUT_LINE('The number ' || n || ' is a palindrome.');
+14 ELSE
+15 DBMS_OUTPUT.PUT_LINE('The number ' || n || ' is not a palindrome.');
+16 END IF;
+17 END;
+18 /
+Enter value for n: 121
+old
+6: n := &n;
+new
+6: n := 121;
+The number 121 is a palindrome.
+PL/SQL procedure successfully completed.
+
+     

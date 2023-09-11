@@ -1,0 +1,87 @@
+4. MongoDB program to Create a student database with the fields: (SRN, Sname, Degree, Sem, CGPA)
+   Insert 10 Student's details
+	1. Display all the documents
+	2. Display all the students in MCA
+	3. Display all the students in ascending order
+	4. Display first 5 students
+	5. Display students 5,6,7
+	6. List the degree of student "Rahul"
+	7. Display students details of 5,6,7 in descending order of CGPA
+	8. Display all the MCA students with CGPA greater than 6
+	
+---Create a student database with the specified fields and insert 10 student's details:
+use studentdb
+
+db.students.insertMany([
+    { SRN: "101", Sname: "Alice", Degree: "MCA", Sem: 2, CGPA: 7.5 },
+    { SRN: "102", Sname: "Bob", Degree: "BSc", Sem: 4, CGPA: 8.0 },
+    { SRN: "103", Sname: "Charlie", Degree: "MCA", Sem: 2, CGPA: 7.8 },
+    { SRN: "104", Sname: "David", Degree: "BSc", Sem: 4, CGPA: 7.2 },
+    { SRN: "105", Sname: "Eve", Degree: "MCA", Sem: 2, CGPA: 8.5 },
+    { SRN: "106", Sname: "Frank", Degree: "BSc", Sem: 6, CGPA: 6.7 },
+    { SRN: "107", Sname: "Grace", Degree: "MCA", Sem: 4, CGPA: 9.2 },
+    { SRN: "108", Sname: "Harry", Degree: "BSc", Sem: 6, CGPA: 7.9 },
+    { SRN: "109", Sname: "Ivy", Degree: "MCA", Sem: 4, CGPA: 8.1 },
+    { SRN: "110", Sname: "Rahul", Degree: "BSc", Sem: 6, CGPA: 6.5 }
+])
+
+1. Display all the documents
+db.students.find()
+
+2. Display all the students in MCA
+db.students.find({ Degree: "MCA" })
+
+3. Display all the students in ascending order
+db.students.find().sort({ CGPA: 1 })
+
+4. Display first 5 students
+db.students.find().limit(5)
+
+5. Display students 5,6,7
+db.students.find().skip(4).limit(3)
+
+6. List the degree of student "Rahul"
+db.students.findOne({ Sname: "Rahul" }, { Degree: 1, _id: 0 })
+
+7. Display students details of 5,6,7 in descending order of CGPA
+db.students.find().skip(4).limit(3).sort({ CGPA: -1 })
+
+8. Display all the MCA students with CGPA greater than 6
+db.students.find({ Degree: "MCA", CGPA: { $gt: 6 } })
+
+
+
+
+
+b) Write a PL/SQL program to find the volume of a cuboid.
+
+SQL> DECLARE
+2 a INTEGER;
+3 b INTEGER;
+4 c INTEGER;
+5 vol INTEGER;
+6 BEGIN
+7 a:=&a;
+8 b:=&b;
+9 c:=&c;
+10 vol:=a*b*c;
+11 DBMS_OUTPUT.PUT_LINE('Volume is '|| vol);
+12 END;
+13 /
+Enter value for a: 2
+old
+7: a:=&a;
+new
+7: a:=2;
+Enter value for b: 3
+old
+8: b:=&b;
+new
+8: b:=3;
+Enter value for c: 4
+old
+9: c:=&c;
+new
+9: c:=4;
+Volume is 24
+PL/SQL procedure successfully completed.

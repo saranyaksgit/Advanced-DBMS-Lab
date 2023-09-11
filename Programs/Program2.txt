@@ -1,0 +1,161 @@
+2. Design at least 10 SQL queries for suitable database application using SQL DML Statements: 
+   Insert, Select, Update, Delete with operators, functions, set operator and aggregate functions. 
+   (Insert minimum 5 rows for each table)
+   • deposit(actno, cname, amount, bname, opendate)
+   • branch(bname, city)
+   • customer(cname, city)
+   • borrow(loanno, cname, bname, amount)
+    Sub Query:
+	1) List name of depositors having account at ‘Alappuzha’.
+	2) List account date of customer ‘Anil’.
+	3) List account no. and depositor name of customers having amount between 40,000 and
+	80,000.
+	4) List customer from depositor starting with ‘A’.
+	5) List all the customers who are both depositors and borrowers.
+	6) List total loan.
+	7) List maximum deposit of customers living in Kollam.
+	8) List branch names and branch wise deposit.
+	9) List the branches having sum of deposit more than 4000.
+	10) Update 10% interest to all depositors.
+	11) Change living city of the Alappuzha branch borrowers to Ernakulam.
+	12) Delete branches having deposit from Calicut.
+
+~Select all deposits greater than $5,0000:
+SELECT * FROM deposit WHERE amount > 50000;
+
+~Update the deposit amount for "David" to $8,5000:
+UPDATE deposit SET amount = 85000 WHERE cname = 'David';
+
+~Delete all deposits made in "Calicut":
+DELETE FROM deposit WHERE bname = 'Calicut';
+
+~Calculate the total deposit amount for each branch:
+SELECT bname, SUM(amount) AS total_deposit FROM deposit GROUP BY bname;
+
+~Find the customer with the highest deposit amount:
+SELECT cname, MAX(amount) AS max_deposit FROM deposit;
+
+~List the total borrowed amount for each customer:
+SELECT cname, SUM(amount) AS total_borrowed FROM borrow GROUP BY cname;
+
+~Insert Minimum 5 Rows for Each Table:	
+-- Insert data into the deposit table
+INSERT INTO deposit (actno, cname, amount, bname, opendate)
+VALUES
+    (1, 'John', 50000, 'Alappuzha', '2023-09-01'),
+    (2, 'Mary', 60000, 'Kollam', '2023-09-02'),
+    (3, 'Anil', 70000, 'Kollam', '2023-09-03'),
+    (4, 'Sara', 80000, 'Alappuzha', '2023-09-04'),
+    (5, 'David', 90000, 'Calicut', '2023-09-05');
+
+-- Insert data into the branch table
+INSERT INTO branch (bname, city)
+VALUES
+    ('Alappuzha', 'Alappuzha'),
+    ('Kollam', 'Kollam'),
+    ('Calicut', 'Calicut'),
+    ('Ernakulam', 'Ernakulam'),
+    ('Trivandrum', 'Trivandrum');
+
+-- Insert data into the customer table
+INSERT INTO customer (cname, city)
+VALUES
+    ('John', 'Alappuzha'),
+    ('Mary', 'Kollam'),
+    ('Anil', 'Kollam'),
+    ('Sara', 'Alappuzha'),
+    ('David', 'Calicut');
+
+-- Insert data into the borrow table
+INSERT INTO borrow (loanno, cname, bname, amount)
+VALUES
+    (101, 'John', 'Alappuzha', 30000),
+    (102, 'Mary', 'Kollam', 40000),
+    (103, 'Anil', 'Kollam', 50000),
+    (104, 'Sara', 'Alappuzha', 60000),
+    (105, 'David', 'Calicut', 70000);
+
+1)List the name of depositors having an account in 'Alappuzha'.
+SELECT cname
+FROM deposit
+WHERE bname = 'Alappuzha';
+
+2)List the account date of the customer 'Anil'.
+SELECT opendate
+FROM deposit
+WHERE cname = 'Anil';
+
+3)List account numbers and depositor names of customers having an amount between 40,000 and 80,000.
+SELECT actno, cname
+FROM deposit
+WHERE amount BETWEEN 40000 AND 80000;
+
+4)List customers whose names start with 'A'.
+SELECT DISTINCT cname
+FROM deposit
+WHERE cname LIKE 'A%';
+
+5)List all customers who are both depositors and borrowers.
+SELECT DISTINCT d.cname
+FROM deposit d
+JOIN borrow b ON d.cname = b.cname;
+
+6)List the total loan amount.
+SELECT SUM(amount) AS total_loan
+FROM borrow;
+
+7)List the maximum deposit of customers living in 'Kollam'.
+SELECT MAX(amount) AS max_deposit
+FROM deposit
+WHERE bname = 'Kollam';
+
+8)List branch names and branch-wise deposit.
+SELECT bname, SUM(amount) AS total_deposit
+FROM deposit
+GROUP BY bname;
+
+9)List the branches having a sum of deposits more than 4000.
+SELECT bname
+FROM deposit
+GROUP BY bname
+HAVING SUM(amount) > 4000;
+
+10)Update all depositors with a 10% interest increase.
+UPDATE deposit
+SET amount = amount * 1.10;
+
+11)Change the living city of the Alappuzha branch borrowers to 'Ernakulam'.
+UPDATE borrow
+SET bname = 'Ernakulam'
+WHERE bname = 'Alappuzha';
+
+12)Delete branches having deposits from 'Calicut'.
+DELETE FROM branch
+WHERE bname = 'Calicut';
+
+
+
+b) Write a PL/SQL program to find the reverse of a number.
+
+SQL> DECLARE
+2 n NUMBER;
+3 rev_n NUMBER;
+4 BEGIN
+5 n:=&n;
+6 rev_n:=0;
+7 WHILE n>0 LOOP
+8 rev_n:=(rev_n*10)+MOD(n,10);
+9 n:=FLOOR(n/10);
+10 END LOOP;
+11 DBMS_OUTPUT.PUT_LINE('Reverse is '||rev_n);
+12 END;
+13 /
+Enter value for n: 123
+old
+5: n:=&n;
+new
+5: n:=123;
+Reverse is 321
+PL/SQL procedure successfully completed.
+
+
